@@ -1,4 +1,11 @@
 #include "GuiItem.h"
+#include "j1App.h"
+#include "j1Input.h"
+#include "GuiSlot.h"
+#include "GuiInventory.h"
+#include "j1Gui.h"
+#include "j1Render.h"
+
 
 
 GuiItem::GuiItem(int s, iPoint* coord, SDL_Rect r) 
@@ -7,18 +14,21 @@ GuiItem::GuiItem(int s, iPoint* coord, SDL_Rect r)
 {
 	size = s;
 	coords = new iPoint[size];
-	ocupied_slots = new GuiSlot*[size];
+	reference_slot = NULL;
+	inventory = NULL;
+	pivot = { ITEM_SECTION_SIZE / 2, ITEM_SECTION_SIZE / 2 };
 
 	for (int i = 0; i < s; i++)
 	{
 		coords[i] = coord[i];
 	}
+
+	draggable = true;
 }
 
 GuiItem::~GuiItem()
 {
 	delete[] coords;
-	delete[] ocupied_slots;
 }
 
 void GuiItem::Draw()
@@ -26,12 +36,66 @@ void GuiItem::Draw()
 	image.Draw();
 }
 
-void GuiItem::Update(GuiElement* hover, GuiElement* focus)
+void GuiItem::DrawDebug()
 {
+	image.DrawDebug();
+
+	iPoint tmp = GetPivotPosition();
+	
+	App->render->DrawQuad({ tmp.x, tmp.y, 2, 2 }, 0, 255, 0, 1000, true, false);
 
 }
 
-iPoint GetSectionPivot()
+void GuiItem::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
 {
-	return{ 0, 0 };
+	if (!dragged_item)
+	{
+		if (CheckCollision(App->input->GetMousePosition()))
+		{
+
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				dragging = true;
+				//NOT sure if using this here
+				App->gui->dragged_item = this;
+				FreeSlots();
+			}
+		}
+	}
+
+
+	if (dragging)
+	{
+		iPoint tmp = App->input->GetMousePosition();
+		tmp.x -= GetLocalRect().w / 2;
+		tmp.y -= GetLocalRect().h / 2;
+
+		SetLocalPosition(tmp);
+
+		if (!hover)
+		{
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				inventory->items.remove(this);
+				//RELEASE(this);
+			}
+		}
+	}
+}
+
+iPoint GuiItem::GetPivotPosition()
+{
+	iPoint ret = pivot;
+	ret += GetScreenPosition();
+
+	return ret;
+}
+
+void GuiItem::FreeSlots()
+{
+	for (int i = 0; i < size; i++)
+	{
+		GuiSlot* slot = inventory->GetSlotFromCoord(reference_slot->coords + coords[i]);
+		slot->inventory_item = NULL;
+	}
 }

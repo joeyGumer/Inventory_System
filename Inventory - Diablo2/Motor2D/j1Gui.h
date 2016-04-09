@@ -8,6 +8,7 @@
 #include <list>
 
 class GuiInventory;
+class GuiItem;
 
 #define CURSOR_WIDTH 2
 
@@ -59,6 +60,7 @@ public:
 public:
 
 	list<GuiElement*> gui_elements;
+	GuiItem*		dragged_item = NULL;
 	bool			interaction;
 
 private:
@@ -68,7 +70,7 @@ private:
 	int             mouse_x, mouse_y;
 
 	GuiElement*		focus;
-	GuiMouseImage* mouse = NULL;
+	GuiMouseImage*	mouse = NULL;
 };
 
 #endif // __j1GUI_H__

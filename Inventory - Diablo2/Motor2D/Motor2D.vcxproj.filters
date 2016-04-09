@@ -138,9 +138,6 @@
     <ClInclude Include="j1PerfTimer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="GuiElements.h">
-      <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
@@ -227,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="GuiItem.h">
       <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiItem</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiElements.h">
+      <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

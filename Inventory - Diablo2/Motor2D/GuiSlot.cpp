@@ -5,7 +5,7 @@
 
 GuiSlot::GuiSlot(iPoint p, SDL_Rect r, GuiElement* par, j1Module* list)
 	:GuiElement({ r.x, r.y }, r, GUI_SLOT, par, list),
-	coords(p), inventory_item(NULL)
+	coords(p), inventory_item(NULL), state(DEFAULT)
 {
 
 }
@@ -13,15 +13,23 @@ GuiSlot::GuiSlot(iPoint p, SDL_Rect r, GuiElement* par, j1Module* list)
 GuiSlot::~GuiSlot()
 {}
 
-void GuiSlot::Update(GuiElement* hover, GuiElement* focus)
+void GuiSlot::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
 {
+	state = DEFAULT;
 }
 
 void GuiSlot::Draw()
 {
-	if (inventory_item)
+	switch (state)
 	{
-		SDL_Rect r = GetScreenRect();
-		App->render->DrawQuad(r, 0, 0, 100, 50, true, false);
+	case DEFAULT:
+		break;
+	case GREEN:
+		App->render->DrawQuad(GetScreenRect(), 0, 100, 0, 50, true, false);
+		break;
+	case YELLOW:
+		break;
+	case RED:
+		break;
 	}
 }

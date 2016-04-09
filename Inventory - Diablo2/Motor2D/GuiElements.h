@@ -8,6 +8,7 @@
 
 struct SDL_Texture;
 struct _TTF_Font;
+class GuiItem;
 
 enum GUI_Type
 {
@@ -44,7 +45,7 @@ public:
 	~GuiElement(){}
 
 	virtual void Draw(){}
-	virtual void Update(GuiElement* hover, GuiElement* focus){}
+	virtual void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item){}
 
 	//Utils
 	bool CheckCollision(iPoint p);
@@ -107,7 +108,7 @@ public:
 	~GuiLabel(){}
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus);
+	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
 
 	//Utils
 	void SetText(p2SString t);
@@ -125,7 +126,7 @@ public:
 	~GuiImage(){};
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus);
+	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
 };
 
 class GuiInputBox : public GuiElement
@@ -137,7 +138,7 @@ public:
 
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus);
+	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
 	//Utils
 	bool Input();
 
@@ -159,7 +160,7 @@ public:
 	~GuiButton(){}
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus);
+	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
 
 public:
 	GuiImage button_image;
@@ -177,7 +178,7 @@ public:
 	~GuiSlider(){};
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus);
+	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
 	
 	//EXERCISE 5
 	float GetValue()const;

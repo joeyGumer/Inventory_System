@@ -56,71 +56,25 @@ bool j1Gui::PreUpdate()
 	interaction = false;
 	mouse->Update();
 	//---------------
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		debug = !debug;
+
 
 	GuiElement* hover_element = FindSelectedElement();
 
 	if (hover_element && hover_element->focusable && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		focus = hover_element;
 
+
+	if (hover_element == NULL && dragged_item && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		//WARNING: have an eye on this
+		dragged_item->inventory->items.remove(dragged_item);
+
+		//NOTE: this is only avaliable for this inventory test due to we are creating items dynamically
+		RELEASE(dragged_item);
+	}
+
 	list<GuiElement*>::iterator item;
 
-	//NOTE: for now, we don't need the focus
-	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
-	{
-		//int index = gui_elements.find(focus);
-		//substitute for focus
-		item = gui_elements.begin();
-		int index = 0;
-		while (item != gui_elements.end())
-		{
-			if ((*item) == focus)
-				break;
-
-			index++;
-			item++;
-		}
-		if (item == gui_elements.end())
-			index = -1;
-		//
-		if (focus)
-		{
-			focus = NULL;
-			index++;
-			item = gui_elements.begin();
-			//substitute for "at"
-			for (int pos = 0; item != gui_elements.end(); item++)
-			{
-				if (pos == index)
-					break;
-
-				pos++;
-			}
-
-			for (; item != gui_elements.end(); item++)
-			{
-				if ((*item)->focusable)
-				{
-					focus = *item;
-					break;
-				}
-			}
-		}
-
-		if (!focus)
-			for (item = gui_elements.begin(); item != gui_elements.end(); item++)
-			{
-				if ((*item)->focusable)
-				{
-					focus = *item;
-					break;
-				}
-			}
-	}*/
-
-	//NOTE, if we use the changeScene at OnEvent, it crashes here , even if there are no items, it says that there's an item without content (NULL)
-	//Ask ric with more questions about UI
 	for (item = gui_elements.begin(); item != gui_elements.end(); item++)
 	{
 		//NOTE!: This solves the interaction problem when moving the player
@@ -133,7 +87,7 @@ bool j1Gui::PreUpdate()
 	for (item = gui_elements.begin(); item != gui_elements.end(); item++)
 	{
 		if ((*item)->active)
-			(*item)->Update(hover_element, focus);
+			(*item)->Update(hover_element, focus, dragged_item);
 	}
 
 	return true;
@@ -163,8 +117,21 @@ bool j1Gui::PostUpdate()
 			}
 		}
 	}
+	//The dragged item turns into the cursor
+	if (dragged_item)
+	{
+		dragged_item->Draw();
+		if (App->debug)
+		{
+			dragged_item->DrawDebug();
+		}
+	}
+	//
+	else
+	{
+		mouse->Draw();
+	}
 
-	mouse->Draw();
 
 	return true;
 }

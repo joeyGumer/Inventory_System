@@ -7,6 +7,7 @@
 #define ITEM_SECTION_SIZE 29
 
 class GuiSlot;
+class GuiInventory;
 
 class GuiItem : public GuiElement
 {
@@ -15,19 +16,25 @@ public:
 	~GuiItem();
 	
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus);
+	void DrawDebug();
+	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
 	
-	iPoint GetSectionPivot();
+	iPoint GetPivotPosition();
+
+	void FreeSlots();
 
 public:
 
 	int size;
 	//NOTE: take good care of these
 	iPoint* coords;
-	GuiSlot** ocupied_slots;
+	iPoint pivot;
+	GuiSlot* reference_slot;
+	GuiInventory* inventory;
 	//
-
 	GuiImage image;
+
+	bool dragging = false;
 };
 
 #endif _GUISLOT_H_
