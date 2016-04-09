@@ -52,7 +52,7 @@ void GuiItem::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item
 	{
 		if (CheckCollision(App->input->GetMousePosition()))
 		{
-
+			inventory->SetSlotsState(this, GREEN);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				dragging = true;
@@ -71,15 +71,6 @@ void GuiItem::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item
 		tmp.y -= GetLocalRect().h / 2;
 
 		SetLocalPosition(tmp);
-
-		if (!hover)
-		{
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				inventory->items.remove(this);
-				//RELEASE(this);
-			}
-		}
 	}
 }
 
@@ -96,6 +87,7 @@ void GuiItem::FreeSlots()
 	for (int i = 0; i < size; i++)
 	{
 		GuiSlot* slot = inventory->GetSlotFromCoord(reference_slot->coords + coords[i]);
-		slot->inventory_item = NULL;
+		if (slot)
+			slot->inventory_item = NULL;
 	}
 }

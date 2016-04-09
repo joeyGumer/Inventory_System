@@ -28,8 +28,10 @@ void GuiSlot::Draw()
 		App->render->DrawQuad(GetScreenRect(), 0, 100, 0, 50, true, false);
 		break;
 	case YELLOW:
+		App->render->DrawQuad(GetScreenRect(), 200, 200, 0, 50, true, false);
 		break;
 	case RED:
+		App->render->DrawQuad(GetScreenRect(), 200, 0, 0, 50, true, false);
 		break;
 	}
 }

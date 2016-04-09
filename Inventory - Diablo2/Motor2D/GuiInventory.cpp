@@ -44,18 +44,36 @@ void GuiInventory::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged
 	{
 		if (dragged_item)
 		{
-			GuiInventory* tmp = (GuiInventory*)hover;
-
-			iPoint coord = tmp->GetCoordFromItem(dragged_item);
-			if (tmp->IsPlaceable(dragged_item, coord))
+			GuiItem* extra_item = NULL;
+			iPoint coord = GetCoordFromItem(dragged_item);
+			if (IsPlaceable(dragged_item, coord, true, &extra_item))
 			{
-				SetSlotsAvaliable(dragged_item);
+				if(extra_item == NULL)
+					SetSlotsState(dragged_item, GREEN);
+				else
+					SetSlotsState(extra_item, YELLOW);
+
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 				{
-						GuiSlot* slot = tmp->GetSlotFromCoord(coord);
-						tmp->AddItem(dragged_item, slot);
+					if (extra_item)
+					{
+						extra_item->FreeSlots();
+					}
+						GuiSlot* slot = GetSlotFromCoord(coord);
+						AddItem(dragged_item, slot);
+
+					if (extra_item)
+					{
+				
+						App->gui->dragged_item->dragging = false;
+						App->gui->dragged_item = extra_item;
+						extra_item->dragging = true;
+					}
+					else
+					{
 						App->gui->dragged_item->dragging = false;
 						App->gui->dragged_item = NULL;
+					}
 				}
 			}
 		}
@@ -134,9 +152,6 @@ iPoint GuiInventory::ScreenToSlot(iPoint pos)
 bool GuiInventory::AddItem(GuiItem* item, GuiSlot* new_slot)
 {
 	AssignItemToSlots(item, new_slot->coords);
-	//In case was moved to the same list, stupid, but necessary
-	//items.remove(item);
-	//
 
 	item->reference_slot = new_slot;
 	item->SetLocalPosition(item->reference_slot->GetScreenPosition());
@@ -156,7 +171,7 @@ bool GuiInventory::AutomaticAddItem(GuiItem* item)
 	{
 		if (slots[i].inventory_item == NULL)
 		{
-			if (IsPlaceable(item, slots[i].coords))
+			if (IsPlaceable(item, slots[i].coords, false))
 			{
 				AddItem(item, &slots[i]);
 				return true;
@@ -172,22 +187,45 @@ void GuiInventory::AssignItemToSlots(GuiItem* item, iPoint& coord)
 	for (int i = 0; i < item->size; i++)
 	{
 		GuiSlot* tmp = GetSlotFromCoord(coord + item->coords[i]);
-		tmp->inventory_item = item;
+		if (tmp)
+			tmp->inventory_item = item;
 	}
 }
 
-bool GuiInventory::IsPlaceable(GuiItem* item, iPoint& coord)
+bool GuiInventory::IsPlaceable(GuiItem* item, iPoint& coord, bool exchange, GuiItem** extra_item)
 {
 
 	for (int i = 0; i < item->size; i++)
 	{
 		GuiSlot* tmp = GetSlotFromCoord(coord + item->coords[i]);
+
 		if (tmp == NULL || tmp->inventory_item)
 		{
-			return false;
+			if (exchange)
+			{
+				if (tmp && tmp->inventory_item)
+				{
+					if ((*extra_item) == NULL)
+					{
+						*extra_item = tmp->inventory_item;
+					}
+					else if (*extra_item != tmp->inventory_item)
+					{
+						SetSlotsState(item, RED);
+						return false;
+					}
+				}
+				else if (!tmp)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
-
 	return true;
 }
 
@@ -238,11 +276,12 @@ void GuiInventory::CleanItems()
 }
 
 //Slot coloring
-void GuiInventory::SetSlotsAvaliable(GuiItem* item)
+void GuiInventory::SetSlotsState(GuiItem* item, SLOT_STATE state)
 {
 	for (int i = 0; i < item->size; i++)
 	{
 		GuiSlot* slot = GetSlotFromCoord(item->coords[i] + GetCoordFromItem(item));
-		slot->state = GREEN;
+		if (slot)
+			slot->state = state;
 	}
 }

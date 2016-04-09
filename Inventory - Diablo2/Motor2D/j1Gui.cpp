@@ -71,6 +71,7 @@ bool j1Gui::PreUpdate()
 
 		//NOTE: this is only avaliable for this inventory test due to we are creating items dynamically
 		RELEASE(dragged_item);
+		interaction = true;
 	}
 
 	list<GuiElement*>::iterator item;

@@ -45,8 +45,10 @@ public:
 	bool AutomaticAddItem(GuiItem* item);
 	bool AddItem(GuiItem* item, GuiSlot* new_slot);
 
+	void Exchange(GuiItem* item1, GuiItem* item2);
+
 	//Checks if there's space for an item
-	bool IsPlaceable(GuiItem* item, iPoint& coord);
+	bool IsPlaceable(GuiItem* item, iPoint& coord, bool exchange = false, GuiItem** extra_item = NULL);
 
 	//Asignes the item to the group of slots that it will occupy
 	void AssignItemToSlots(GuiItem* item, iPoint& coord);
@@ -61,7 +63,7 @@ public:
 	bool CoordExist(iPoint& coord);
 	
 	//Slot coloring
-	void SetSlotsAvaliable(GuiItem* item);
+	void SetSlotsState(GuiItem* item, SLOT_STATE state);
 	
 	/*
 	--------Attributes
