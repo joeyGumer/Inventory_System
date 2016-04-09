@@ -138,7 +138,7 @@ bool hudBelt::CleanUp()
 }
 
 //Called when there's a gui event
-void hudBelt::OnEvent(GuiElement* element, GUI_EVENT even)
+void hudBelt::OnEvent(GuiElement* element, GUI_Event even)
 {
 	//HUD -------------------------------------
 	//Run button

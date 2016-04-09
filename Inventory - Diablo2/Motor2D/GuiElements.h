@@ -18,6 +18,8 @@ enum GUI_Type
 	GUI_SLIDER,
 	GUI_MOUSE_IMAGE,
 	GUI_INVENTORY,
+	GUI_SLOT,
+	GUI_ITEM,
 };
 
 enum GUI_Event

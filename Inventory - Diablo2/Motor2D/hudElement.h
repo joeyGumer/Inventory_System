@@ -7,7 +7,7 @@
 using namespace std;
 
 class GuiElement;
-enum GUI_EVENT;
+enum GUI_Event;
 
 
 class hudElement : public j1Module
@@ -48,7 +48,7 @@ public:
 		return true;
 	}
 
-	virtual void OnEvent(GuiElement* element, GUI_EVENT even)
+	virtual void OnEvent(GuiElement* element, GUI_Event even)
 	{}
 
 

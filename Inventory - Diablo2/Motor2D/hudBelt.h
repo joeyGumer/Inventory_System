@@ -3,7 +3,7 @@
 
 #include "hudElement.h"
 
-enum GUI_EVENT;
+enum GUI_Event;
 class j1HUD;
 class GuiElement;
 class GuiImage;
@@ -40,7 +40,7 @@ public:
 	bool CleanUp();
 
 	//Called when there's a gui event
-	void OnEvent(GuiElement* element, GUI_EVENT even);
+	void OnEvent(GuiElement* element, GUI_Event even);
 
 	//Utils
 	void SetLife(int max_HP, int HP);

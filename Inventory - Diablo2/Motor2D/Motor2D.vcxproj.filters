@@ -85,6 +85,18 @@
     <ClCompile Include="hudElement.cpp">
       <Filter>Desenvolupament  ========\Modules\j1HUD\hudElements</Filter>
     </ClCompile>
+    <ClCompile Include="hudPause.cpp">
+      <Filter>Desenvolupament  ========\Modules\j1HUD\hudElements\hudPause</Filter>
+    </ClCompile>
+    <ClCompile Include="hudInventory.cpp">
+      <Filter>Desenvolupament  ========\Modules\j1HUD\hudElements\hudInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiSlot.cpp">
+      <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiItem.cpp">
+      <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiItem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -204,6 +216,18 @@
     <ClInclude Include="hudElement.h">
       <Filter>Desenvolupament  ========\Modules\j1HUD\hudElements</Filter>
     </ClInclude>
+    <ClInclude Include="hudPause.h">
+      <Filter>Desenvolupament  ========\Modules\j1HUD\hudElements\hudPause</Filter>
+    </ClInclude>
+    <ClInclude Include="hudInventory.h">
+      <Filter>Desenvolupament  ========\Modules\j1HUD\hudElements\hudInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiSlot.h">
+      <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiItem.h">
+      <Filter>Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiItem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -292,6 +316,18 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\j1HUD\hudElements\hudBelt">
       <UniqueIdentifier>{af7352ee-4c35-47b3-ab0b-d91d0dd6a143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\j1HUD\hudElements\hudPause">
+      <UniqueIdentifier>{6038d370-0aee-43c0-9a2c-209690d55242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\j1HUD\hudElements\hudInventory">
+      <UniqueIdentifier>{e10e2298-90fb-431f-9aff-ce528373405e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiSlot">
+      <UniqueIdentifier>{9c424b00-b236-46cb-9414-b23d8c38a03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\j1Gui\GuiElements\GuiItem">
+      <UniqueIdentifier>{bcf8358b-f8ec-4636-b18f-e2bf75d13726}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

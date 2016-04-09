@@ -3,23 +3,12 @@
 
 #include "GuiElements.h"
 #include "p2Point.h"
+#include "GuiSlot.h"
+#include "GuiItem.h"
 #include <vector>
+#include <list>
 
 using namespace std;
-
-//NOTE: Do the slot a Gui element?
-struct Slot
-{
-	Slot(iPoint p, SDL_Rect r, GuiElement* father) : coords(p), local_rect(r), parent(father), free(true){}
-
-	iPoint coords;
-	SDL_Rect local_rect;
-	bool free;
-	GuiElement* parent;
-
-
-	SDL_Rect GetScreenRect();
-};
 
 
 class GuiInventory : public GuiElement
@@ -37,7 +26,7 @@ public:
 	~GuiInventory();
 
 	//Called each loop iteration
-	void Update();
+	void Update(GuiElement* hover, GuiElement* focus);
 
 	//Blit to screen
 	void Draw();
@@ -49,7 +38,11 @@ public:
 	iPoint SlotToInventory(iPoint pos);
 	iPoint InventoryToSlot(iPoint pos);
 
+	//Checks if there's space for an item and then adds it
+	bool AddItem(GuiItem* item);
 
+	//Checks if there's space for an item
+	bool CheckFreeSpace(GuiItem* item);
 	/*
 	--------Attributes
 	*/
@@ -63,9 +56,10 @@ private:
 	int slot_height;
 
 	GuiImage image;
-
-	//vector or list?
-	vector<Slot> slots;
+	
+	vector<GuiSlot> slots;
+	list<GuiItem*> items;
+	//NOTE: thinking of puting a list of ocupied slots and a list of free slots for optimization when searching free space or drawin slots
 
 }
 
