@@ -63,17 +63,16 @@ bool j1Gui::PreUpdate()
 	if (hover_element && hover_element->focusable && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		focus = hover_element;
 
-
+	//----------------------------
+	//When clicking outside, at the scenery, the dragged item is deleted (in a normal gameplay it would lead the world item)
 	if (hover_element == NULL && dragged_item && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		//WARNING: have an eye on this
 		dragged_item->inventory->items.remove(dragged_item);
-
-		//NOTE: this is only avaliable for this inventory test due to we are creating items dynamically
 		RELEASE(dragged_item);
 		interaction = true;
 	}
 
+	//---------------------------
 	list<GuiElement*>::iterator item;
 
 	for (item = gui_elements.begin(); item != gui_elements.end(); item++)
@@ -88,7 +87,7 @@ bool j1Gui::PreUpdate()
 	for (item = gui_elements.begin(); item != gui_elements.end(); item++)
 	{
 		if ((*item)->active)
-			(*item)->Update(hover_element, focus, dragged_item);
+			(*item)->Update(hover_element, focus);
 	}
 
 	return true;
@@ -118,7 +117,8 @@ bool j1Gui::PostUpdate()
 			}
 		}
 	}
-	//The dragged item turns into the cursor
+
+	//The dragged item is drawn instead of the mouse cursor
 	if (dragged_item)
 	{
 		dragged_item->Draw();
@@ -218,9 +218,9 @@ GuiSlider* j1Gui::AddGuiSlider(iPoint p, SDL_Rect tex_1, SDL_Rect tex_2, int wid
 	return slider;
 }
 
-GuiInventory* j1Gui::AddGuiInventory(iPoint p, SDL_Rect r, int col, int rows, int slot_w, int slot_h, iPoint offset, GuiElement* par, j1Module* list)
+GuiInventory* j1Gui::AddGuiInventory(iPoint p, SDL_Rect r, int col, int rows, int slot_w, int slot_h, GuiElement* par, j1Module* list)
 {
-	GuiInventory* inventory = new GuiInventory(p, r, col, rows, slot_w, slot_h, offset, par, list);
+	GuiInventory* inventory = new GuiInventory(p, r, col, rows, slot_w, slot_h, par, list);
 	gui_elements.push_back(inventory);
 	return inventory;
 }

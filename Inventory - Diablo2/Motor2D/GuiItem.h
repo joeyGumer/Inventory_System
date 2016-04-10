@@ -17,7 +17,9 @@ public:
 	
 	void Draw();
 	void DrawDebug();
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
+
+	void Move();
 	
 	iPoint GetPivotPosition();
 
@@ -25,16 +27,12 @@ public:
 
 public:
 
-	int size;
-	//NOTE: take good care of these
-	iPoint* coords;
-	iPoint pivot;
-	GuiSlot* reference_slot;
-	GuiInventory* inventory;
-	//
-	GuiImage image;
-
-	bool dragging = false;
+	int				size;
+	iPoint*			coords;
+	iPoint			pivot;
+	GuiSlot*		reference_slot;
+	GuiInventory*	inventory;
+	GuiImage		image;
 };
 
 #endif _GUISLOT_H_

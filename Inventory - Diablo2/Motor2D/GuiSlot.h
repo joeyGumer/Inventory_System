@@ -20,7 +20,7 @@ public:
 	GuiSlot(iPoint p, SDL_Rect r, GuiElement* parent, j1Module* listener);
 	~GuiSlot();
 
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
 	void Draw();
 
 public:

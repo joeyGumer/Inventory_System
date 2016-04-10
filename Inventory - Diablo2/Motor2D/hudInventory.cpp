@@ -28,7 +28,8 @@ bool hudInventory::Start()
 	background = App->gui->AddGuiImage({ 401, 0 }, { 1128, 588, 319, 430 }, NULL, this);
 	hud_gui_elements.push_back(background);
 
-	inventory = App->gui->AddGuiInventory({ 16, 255 }, { 1144, 843, 290, 116 }, 10, 4, 29, 29, { 0, 0 }, background, this);
+	//Creation of the inventory
+	inventory = App->gui->AddGuiInventory({ 16, 255 }, { 1144, 843, 290, 116 }, 10, 4, ITEM_SECTION_SIZE, ITEM_SECTION_SIZE, background, this);
 	hud_gui_elements.push_back(inventory);
 
 	return true;
@@ -37,6 +38,7 @@ bool hudInventory::Start()
 //Called before each loop iteration
 bool hudInventory::PreUpdate()
 {
+	//Adding different item to the inventory
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		//Potion
@@ -109,7 +111,8 @@ bool hudInventory::PostUpdate()
 //Called before quitting
 bool hudInventory::CleanUp()
 {
-
+	//WARNING: can't do this plox
+	App->gui->dragged_item = NULL;
 	inventory->CleanItems();
 
 	for (int i = 0; i < hud_gui_elements.size(); i++)

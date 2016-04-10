@@ -22,8 +22,6 @@ GuiItem::GuiItem(int s, iPoint* coord, SDL_Rect r)
 	{
 		coords[i] = coord[i];
 	}
-
-	draggable = true;
 }
 
 GuiItem::~GuiItem()
@@ -46,34 +44,31 @@ void GuiItem::DrawDebug()
 
 }
 
-void GuiItem::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiItem::Update(GuiElement* hover, GuiElement* focus)
 {
-	if (!dragged_item)
+	//If there's no dragged_item, when clicking over the item, it's freed from the inventory
+	if (!(App->gui->dragged_item))
 	{
 		if (CheckCollision(App->input->GetMousePosition()))
 		{
+			//Feedback :D
 			inventory->SetSlotsState(this, GREEN);
+			
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				dragging = true;
-				//NOT sure if using this here
-				App->gui->dragged_item = this;
-				FreeSlots();
+				inventory->FreeItem(this);
 			}
 		}
 	}
 
-
-	if (dragging)
+	//If this is the dragging item, move it
+	if (App->gui->dragged_item == this)
 	{
-		iPoint tmp = App->input->GetMousePosition();
-		tmp.x -= GetLocalRect().w / 2;
-		tmp.y -= GetLocalRect().h / 2;
-
-		SetLocalPosition(tmp);
+		Move();
 	}
 }
 
+//Gives the pivot position over the screen
 iPoint GuiItem::GetPivotPosition()
 {
 	iPoint ret = pivot;
@@ -82,6 +77,7 @@ iPoint GuiItem::GetPivotPosition()
 	return ret;
 }
 
+//Frees the slots under the item
 void GuiItem::FreeSlots()
 {
 	for (int i = 0; i < size; i++)
@@ -90,4 +86,14 @@ void GuiItem::FreeSlots()
 		if (slot)
 			slot->inventory_item = NULL;
 	}
+}
+
+//Moves accordingly to the mouse
+void GuiItem::Move()
+{
+	iPoint tmp = App->input->GetMousePosition();
+	tmp.x -= GetLocalRect().w / 2;
+	tmp.y -= GetLocalRect().h / 2;
+
+	SetLocalPosition(tmp);
 }

@@ -13,13 +13,15 @@ GuiSlot::GuiSlot(iPoint p, SDL_Rect r, GuiElement* par, j1Module* list)
 GuiSlot::~GuiSlot()
 {}
 
-void GuiSlot::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiSlot::Update(GuiElement* hover, GuiElement* focus)
 {
+	//The states goes to deafult each iteration
 	state = DEFAULT;
 }
 
 void GuiSlot::Draw()
 {
+	//According to its state, it draws diferent color squares
 	switch (state)
 	{
 	case DEFAULT:

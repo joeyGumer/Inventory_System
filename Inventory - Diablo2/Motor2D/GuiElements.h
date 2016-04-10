@@ -45,7 +45,7 @@ public:
 	~GuiElement(){}
 
 	virtual void Draw(){}
-	virtual void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item){}
+	virtual void Update(GuiElement* hover, GuiElement* focus){}
 
 	//Utils
 	bool CheckCollision(iPoint p);
@@ -108,7 +108,7 @@ public:
 	~GuiLabel(){}
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
 
 	//Utils
 	void SetText(p2SString t);
@@ -126,7 +126,7 @@ public:
 	~GuiImage(){};
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
 };
 
 class GuiInputBox : public GuiElement
@@ -138,7 +138,7 @@ public:
 
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
 	//Utils
 	bool Input();
 
@@ -160,7 +160,7 @@ public:
 	~GuiButton(){}
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
 
 public:
 	GuiImage button_image;
@@ -178,7 +178,7 @@ public:
 	~GuiSlider(){};
 
 	void Draw();
-	void Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item);
+	void Update(GuiElement* hover, GuiElement* focus);
 	
 	//EXERCISE 5
 	float GetValue()const;

@@ -140,17 +140,17 @@ void GuiMouseImage::Update()
 	this->SetLocalPosition({ mouse_x, mouse_y });
 }
 //----------------------
-void GuiImage::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiImage::Update(GuiElement* hover, GuiElement* focus)
 {
 	//Nothing
 }
 
-void GuiLabel::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiLabel::Update(GuiElement* hover, GuiElement* focus)
 {
 	//Nothing
 }
 
-void GuiInputBox::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiInputBox::Update(GuiElement* hover, GuiElement* focus)
 {
 	bool focused = (focus == this);
 	
@@ -206,7 +206,7 @@ void GuiInputBox::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_
 
 }
 
-void GuiButton::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiButton::Update(GuiElement* hover, GuiElement* focus)
 {
 	//Nothing
 }
@@ -394,7 +394,7 @@ void GuiSlider::Draw()
 	thumb.Draw();
 }
 
-void GuiSlider::Update(GuiElement* hover, GuiElement* focus, GuiItem* dragged_item)
+void GuiSlider::Update(GuiElement* hover, GuiElement* focus)
 {
 	bool focused = (focus == this);
 	
